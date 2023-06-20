@@ -28,7 +28,7 @@ jobs:
           service_account: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
           access_token_lifetime: 600s
       
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         with:
           registry: us-central1-docker.pkg.dev
           username: oauth2accesstoken
