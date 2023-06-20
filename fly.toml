@@ -1,0 +1,40 @@
+# fly.toml app configuration file generated for wafflehacks-nats on 2023-06-18T22:00:01-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "wafflehacks-nats"
+primary_region = "yyz"
+
+console_command = "/bin/ash"
+
+[build]
+  image = "us-central1-docker.pkg.dev/wafflehacks-production/internal/nats:sha-SHORT_SHA"
+
+[deploy]
+  strategy = "rolling"
+
+[checks]
+  [checks.alive]
+    type = "http"
+
+    protocol = "http"
+    port = 8222
+    method = "get"
+    path = "/healthz"
+
+    interval = "15s"
+    timeout = "3s"
+    grace_period = "10s"
+
+  [checks.jetstream]
+    type = "http"
+
+    protocol = "http"
+    port = 8222
+    method = "get"
+    path = "/healthz?js-server-only=true"
+
+    interval = "15s"
+    timeout = "3s"
+    grace_period = "10s"
